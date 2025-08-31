@@ -40,3 +40,15 @@
 # debug information files
 *.dwo
 /.vs
+/Editor/.vs
+/Editor/obj
+/Editor/Editor.csproj
+/Editor/Editor.csproj.user
+/Editor/Editor.sln
+/Engine/.vs/Engine
+/Engine/Engine.sln
+/Engine/Engine.vcxproj
+/Engine/Engine.vcxproj.filters
+/Engine/Engine.vcxproj.user
+/x64
+*.sln
