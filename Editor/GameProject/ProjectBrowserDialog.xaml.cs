@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Editor.GameProject
 {
     /// <summary>
-    /// Logica di interazione per ProjectBrowserDialogue.xaml
+    /// Logica di interazione per ProjectBrowserDialog.xaml
     /// </summary>
-    public partial class ProjectBrowserDialogue : Window
+    public partial class ProjectBrowserDialog : Window
     {
-        public ProjectBrowserDialogue()
+        public ProjectBrowserDialog()
         {
             InitializeComponent();
         }
