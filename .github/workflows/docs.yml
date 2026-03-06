@@ -1,0 +1,22 @@
+name: Documentation
+
+on:
+  push:
+    branches: [main]  # deploy solo quando il codice è stabile
+
+jobs:
+  doxygen:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # necessario per fare push su gh-pages
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Doxygen
+        run: sudo apt-get install -y doxygen graphviz
+      - name: Generate docs
+        run: doxygen docs/Doxyfile
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/html

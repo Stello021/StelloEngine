@@ -1,0 +1,30 @@
+name: Sanitizers
+
+on:
+  push:
+    branches: [main, dev]
+
+jobs:
+  asan:
+    name: AddressSanitizer + UBSan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure with ASAN preset
+        run: cmake --preset linux-asan  # preset dedicato con -fsanitize=address,undefined
+      - name: Build
+        run: cmake --build --preset linux-asan
+      - name: Test
+        run: ctest --preset linux-asan --output-on-failure
+
+  tsan:
+    name: ThreadSanitizer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure with TSAN preset
+        run: cmake --preset linux-tsan
+      - name: Build
+        run: cmake --build --preset linux-tsan
+      - name: Test
+        run: ctest --preset linux-tsan --output-on-failure

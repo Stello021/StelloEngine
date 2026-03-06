@@ -1,0 +1,66 @@
+name: CI
+
+# Si esegue su ogni push e su ogni Pull Request verso main e dev
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  build:
+    name: Build & Test
+    # Matrix: esegue lo stesso job su 3 OS e 3 compiler in parallelo
+    strategy:
+      fail-fast: false   # non interrompere gli altri job se uno fallisce
+      matrix:
+        include:
+          - os: ubuntu-latest
+            compiler: gcc-13
+            preset: linux-debug
+          - os: windows-latest
+            compiler: msvc
+            preset: windows-debug
+          - os: macos-latest
+            compiler: appleclang
+            preset: macos-debug
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      # 1. Checkout del codice (con --recursive per i submodule)
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      # 2. Cache di vcpkg per non riscaricare le dipendenze ad ogni run
+      - name: Cache vcpkg
+        uses: actions/cache@v4
+        with:
+          path: vcpkg_installed
+          key: vcpkg-${{ matrix.os }}-${{ hashFiles('vcpkg.json') }}
+
+      # 3. Installa le dipendenze di sistema (solo su Ubuntu)
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get install -y ninja-build
+
+      # 4. Configura CMake usando i preset (questo è il motivo per cui CMakePresets.json è fondamentale)
+      - name: Configure CMake
+        run: cmake --preset ${{ matrix.preset }}
+
+      # 5. Build
+      - name: Build
+        run: cmake --build --preset ${{ matrix.preset }}
+
+      # 6. Esegui i test con CTest
+      - name: Test
+        run: ctest --preset ${{ matrix.preset }} --output-on-failure
+
+      # 7. Upload del coverage su Codecov (solo su Ubuntu per evitare duplicati)
+      - name: Upload Coverage
+        if: runner.os == 'Linux'
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
