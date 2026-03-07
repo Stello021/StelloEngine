@@ -2,19 +2,34 @@ name: Documentation
 
 on:
   push:
-    branches: [main]  # deploy solo quando il codice è stabile
+    branches: [main]
 
 jobs:
   doxygen:
+    name: Generate & Deploy Docs
     runs-on: ubuntu-latest
+
     permissions:
-      contents: write   # necessario per fare push su gh-pages
+      contents: write   # necessario per fare push sul branch gh-pages
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Install Doxygen
+      # 1. Scarica il codice sorgente
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Installa Doxygen e Graphviz (per i grafi delle dipendenze)
+      - name: Install Doxygen and Graphviz
         run: sudo apt-get install -y doxygen graphviz
-      - name: Generate docs
+
+      # 3. Crea la cartella di output prima che Doxygen tenti di scriverci
+      - name: Create output directory
+        run: mkdir -p docs/html
+
+      # 4. Genera la documentazione usando il Doxyfile che hai committato
+      - name: Generate documentation
         run: doxygen docs/Doxyfile
+
+      # 5. Pubblica il contenuto di docs/html sul branch gh-pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:

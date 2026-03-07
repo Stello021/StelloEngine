@@ -2,7 +2,7 @@
 
 <!-- Qui metterai i badge CI, coverage e license — li aggiungiamo nella Fase 5 -->
 
-![Build Status](https://github.com/username/StellarEngine/actions/workflows/ci.yml/badge.svg)
+![Build Status](https://github.com/Stello021/StellarEngine/actions/workflows/ci.yml/badge.svg)
 ![Coverage](https://codecov.io/gh/username/StellarEngine/badge.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 

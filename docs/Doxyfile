@@ -1,0 +1,76 @@
+# ---------------------------------------------------------------------------
+# Stellar Engine — Doxygen Configuration
+# ---------------------------------------------------------------------------
+
+# --- Informazioni Progetto ---
+PROJECT_NAME           = "Stellar Engine"
+PROJECT_NUMBER         = 0.1.0
+PROJECT_BRIEF          = "A modular C++20 game engine — Architecture & Engineering Portfolio"
+PROJECT_LOGO           =
+OUTPUT_DIRECTORY       = docs/html
+
+# --- Sorgenti da documentare ---
+INPUT                  = foundation \
+                         platform   \
+                         runtime    \
+                         editor     \
+                         scripting  \
+                         README.md
+INPUT_ENCODING         = UTF-8
+FILE_PATTERNS          = *.hpp *.h *.cpp *.md
+RECURSIVE              = YES
+EXCLUDE_PATTERNS       = */build/* \
+                         */vcpkg_installed/* \
+                         */tests/*
+
+# --- Estrazione documentazione ---
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = YES
+HIDE_UNDOC_MEMBERS     = NO
+SHOW_INCLUDE_FILES     = YES
+
+# --- Output HTML ---
+GENERATE_HTML          = YES
+HTML_OUTPUT            = .          # output diretto in docs/html/
+HTML_TIMESTAMP         = NO         # NO evita diff inutili nel git
+GENERATE_TREEVIEW      = YES
+DISABLE_INDEX          = NO
+FULL_SIDEBAR           = NO
+
+# --- Grafici delle dipendenze (richiede Graphviz) ---
+HAVE_DOT               = YES
+DOT_NUM_THREADS        = 4
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+CLASS_GRAPH            = YES
+INCLUDE_GRAPH          = YES
+INCLUDED_BY_GRAPH      = YES
+COLLABORATION_GRAPH    = YES
+DOT_IMAGE_FORMAT       = svg        # SVG è scalabile, meglio di PNG
+INTERACTIVE_SVG        = YES
+MAX_DOT_GRAPH_DEPTH    = 3          # oltre 3 livelli i grafi diventano illeggibili
+
+# --- Markdown support ---
+USE_MDFILE_AS_MAINPAGE = README.md
+MARKDOWN_SUPPORT       = YES
+AUTOLINK_SUPPORT       = YES
+
+# --- Output non necessari (disabilitati) ---
+GENERATE_LATEX         = NO
+GENERATE_RTF           = NO
+GENERATE_MAN           = NO
+GENERATE_XML           = NO
+
+# --- Warnings — trattali come errori in CI ---
+QUIET                  = NO
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
+WARN_AS_ERROR          = NO         # YES solo quando la codebase è matura
+
+# --- Misc ---
+ALPHABETICAL_INDEX     = YES
+SORT_MEMBER_DOCS       = YES
+SHOW_NAMESPACES        = YES
+SHOW_FILES             = YES
